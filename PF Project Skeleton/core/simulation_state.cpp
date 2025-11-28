@@ -75,7 +75,7 @@ void initializeSimulationState() {
     weather=weather_normal;
     currentTick=0;
     total_trains_crashed=0;
-    total_trains_finished=0
+    total_trains_finished=0;
     emergency_halt_active=false;
     emergency_halt_timer=0;
 
