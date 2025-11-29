@@ -5,6 +5,8 @@
 #include <cstring>
 #include <cstdio>
 #include <cstdlib>
+#include <iostream>
+#include <atring>
 
 // ============================================================================
 // IO.CPP - Level I/O and logging
@@ -16,7 +18,7 @@
 // Load a .lvl file into global state.
 // ----------------------------------------------------------------------------
 bool loadLevelFile() {
-    initializeSimulationState();
+    initializeSimulationState(const char* filename);
     ifstream file(filename);
     if(!file.is_open()){
         cout<<"Error: Could not open level file "<<endl;
@@ -59,8 +61,70 @@ bool loadLevelFile() {
             currentsection="TRAINS";
             continue;
         }
+        if(currentsection=="ROWS"){
+            rows=stoi(line);
+        }
+        else if(currentsection=="COLS"){
+            cols=stoi(line);
+        }
+        else if(currentsection=="SEED"){
+            seed=stoi(line);
+        }
+        else if(currentsection=="WEATHER"){
+            if(line=="RAIN") weather=weather_rain;
+            else if(line=="FOG") weather=weather_fog;
+            else weather=weather_normal;
+        }
+        else if(currentsection=="MAP"){
+            if(mapRow<max_rows){
+                for(int i=0;i<(int)line.length()&&i<max_cols;i++){
+                    grid[mapRow][i]=line[i];
+                }
+                mapRow++;
+            }
+        }
+        else if(currentsection=="SWITCHES"){
+    char letter;
+    char modeStr[20];
+    int first,k0,k1,k2,k3;  
+    int items=sscanf(line.c_str(),"%c %s %d %d %d %d %d",&letter,modeStr,&first,&k0,&k1,&k2,&k3);
+    if(items==7){
+        int idx=letter-'A';  
+        if(idx>=0&&idx<max_switch){
+            switch_exists[idx]=true;
+            switch_state[idx]=first; 
+            string m=modeStr;
+            if(m=="GLOBAL") switch_mode[idx]=1;
+            else switch_mode[idx]=0;
+            switch_Kvalue[idx][0]=k0;
+            switch_Kvalue[idx][1]=k1;
+            switch_Kvalue[idx][2]=k2;
+            switch_Kvalue[idx][3]=k3;
+            for(int dir=0;dir<4;dir++){
+                switch_count[idx][dir]=0;
+            }
+        }
     }
-
+}
+    else if(currentsection=="TRAINS"){
+    int t,tx,ty,tdir,tcol;
+    int items=sscanf(line.c_str(),"%d %d %d %d %d",&t,&tx,&ty,&tdir,&tcol);
+    if(items==5&&traincount<max_trains){
+        id[traincount]=traincount;
+        spawnTick[traincount]=t;
+        x[traincount]=tx;
+        y[traincount]=ty;
+        direction[traincount]=tdir;
+        color[traincount]=tcol;
+        Active[traincount]=false;
+        Finished[traincount]=false;
+        Crashed[traincount]=false;
+        traincount++;
+    }
+}
+}
+    file.close();
+    return true;
 }
 
 // ----------------------------------------------------------------------------
