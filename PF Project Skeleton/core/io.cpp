@@ -6,7 +6,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <iostream>
-#include <atring>
+#include <string>
 
 // ============================================================================
 // IO.CPP - Level I/O and logging
