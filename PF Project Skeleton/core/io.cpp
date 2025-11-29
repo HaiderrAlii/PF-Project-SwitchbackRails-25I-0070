@@ -7,7 +7,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
-
+using namespace std;
 // ============================================================================
 // IO.CPP - Level I/O and logging
 // ============================================================================
@@ -17,8 +17,8 @@
 // ----------------------------------------------------------------------------
 // Load a .lvl file into global state.
 // ----------------------------------------------------------------------------
-bool loadLevelFile() {
-    initializeSimulationState(const char* filename);
+bool loadLevelFile(const char* filename) {
+    initializeSimulationState();
     ifstream file(filename);
     if(!file.is_open()){
         cout<<"Error: Could not open level file "<<endl;
@@ -90,7 +90,7 @@ bool loadLevelFile() {
     int items=sscanf(line.c_str(),"%c %s %d %d %d %d %d",&letter,modeStr,&first,&k0,&k1,&k2,&k3);
     if(items==7){
         int idx=letter-'A';  
-        if(idx>=0&&idx<max_switch){
+        if(idx>=0 && idx<max_switch){
             switch_exists[idx]=true;
             switch_state[idx]=first; 
             string m=modeStr;
@@ -124,6 +124,7 @@ bool loadLevelFile() {
 }
 }
     file.close();
+    cout<<"Loaded level file "<<filename<<": "<<rows<<" rows, "<<cols<<" cols, "<<traincount<<" trains."<<endl; 
     return true;
 }
 
