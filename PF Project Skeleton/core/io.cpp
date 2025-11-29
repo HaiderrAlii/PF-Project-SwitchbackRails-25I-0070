@@ -16,6 +16,51 @@
 // Load a .lvl file into global state.
 // ----------------------------------------------------------------------------
 bool loadLevelFile() {
+    initializeSimulationState();
+    ifstream file(filename);
+    if(!file.is_open()){
+        cout<<"Error: Could not open level file "<<endl;
+        return false;
+    }
+    string line;
+    string currentsection="";
+    int mapRow;
+    while(getline(file,line)){
+        if(!line.empty()&&line[line.length()-1]=='\r'){
+            line.erase(line.length()-1);
+        }
+        if(line.empty()) continue;
+        if(line=="ROWS:"){
+            currentsection="ROWS";
+            continue;
+        }
+        if(line=="COLS:"){
+            currentsection="COLS";
+            continue;
+        }
+        if(line=="SEED:"){
+            currentsection="SEED";
+            continue;
+        }
+        if(line=="WEATHER:"){
+            currentsection="WEATHER";
+            continue;
+        }
+        if(line=="MAP:"){
+            currentsection="MAP";
+            mapRow=0;
+            continue;
+        }
+        if(line=="SWITCHES:"){
+            currentsection="SWITCHES";
+            continue;
+        }
+        if(line=="TRAINS:"){
+            currentsection="TRAINS";
+            continue;
+        }
+    }
+
 }
 
 // ----------------------------------------------------------------------------
