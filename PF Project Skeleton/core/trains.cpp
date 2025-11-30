@@ -3,6 +3,8 @@
 #include "grid.h"
 #include "switches.h"
 #include <cstdlib>
+#include <iostream>
+using namespace std;
 
 // ============================================================================
 // TRAINS.CPP - Train logic
@@ -151,6 +153,9 @@ void moveAllTrains(){
     determineAllRoutes();
     detectCollisions(); 
     for(int i=0;i<traincount;i++){
+        if (Active[i] && !can_move[i] && !Crashed[i]) {
+            cout<<"Train "<<i<<" WAITING at "<<x[i]<<","<<y[i]<<endl;
+        }
         if(Active[i]==true&&Crashed[i]==false&&can_move[i]==true){
             char nextTile=grid[next_y[i]][next_x[i]];
             if(nextTile>='A'&&nextTile<='Z'){

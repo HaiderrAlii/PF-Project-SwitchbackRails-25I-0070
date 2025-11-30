@@ -124,15 +124,24 @@ bool loadLevelFile(const char* filename) {
 }
 }
     file.close();
-    for(int i=0;i<traincount;i++){
-        int cx=x[i];
-        int cy=y[i];
+    for(int i=0; i<traincount; i++){
+        int cx = x[i];
+        int cy = y[i];
         if(grid[cy][cx] != 'S'){
+            int bestRow = -1;
+            int bestDist = 1000;
             for(int r=0; r<rows; r++){
-                if(grid[r][cx]=='S'){
-                    y[i]=r; 
-                    break;
+                if(grid[r][cx] == 'S'){
+                    int dist = abs(r - cy);
+                    if(dist < bestDist){
+                        bestDist = dist;
+                        bestRow = r;
+                    }
                 }
+            }
+            if(bestRow != -1){
+                y[i]=bestRow; 
+                cout<<"Corrected Train "<<i<<" Y: "<<cy<<" -> "<<bestRow<<endl;
             }
         }
     }
