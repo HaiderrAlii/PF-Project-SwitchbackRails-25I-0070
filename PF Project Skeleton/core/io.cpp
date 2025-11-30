@@ -31,7 +31,7 @@ bool loadLevelFile(const char* filename) {
         if(!line.empty()&&line[line.length()-1]=='\r'){
             line.erase(line.length()-1);
         }
-        if(line.empty()) continue;
+        if(line.empty() && currentsection != "MAP") continue;
         if(line=="ROWS:"){
             currentsection="ROWS";
             continue;
@@ -124,6 +124,18 @@ bool loadLevelFile(const char* filename) {
 }
 }
     file.close();
+    for(int i=0;i<traincount;i++){
+        int cx=x[i];
+        int cy=y[i];
+        if(grid[cy][cx] != 'S'){
+            for(int r=0; r<rows; r++){
+                if(grid[r][cx]=='S'){
+                    y[i]=r; 
+                    break;
+                }
+            }
+        }
+    }
     cout<<"Loaded level file "<<filename<<": "<<rows<<" rows, "<<cols<<" cols, "<<traincount<<" trains."<<endl; 
     return true;
 }

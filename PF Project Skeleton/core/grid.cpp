@@ -21,13 +21,13 @@ bool isInBounds(int r,int c){
 // Returns true if the tile can be traversed by trains.
 // ----------------------------------------------------------------------------
 bool isTrackTile(char tile){
-    if(tile=='-'||tile=='|'||tile=='/'||tile=='\\'||tile=='+'||tile=='='){
+    if(tile=='-'||tile=='|'||tile=='/'||tile=='\\'||tile=='+'||tile=='='||tile=='S'||tile=='D'){
         return true;
     }
     if(tile>='A'&&tile<='Z'){
         return true;
     }
-    else return false;
+    return false;
 }
 
 // ----------------------------------------------------------------------------

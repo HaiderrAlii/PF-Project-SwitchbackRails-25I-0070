@@ -31,20 +31,14 @@ int main(int argc, char* argv[]){
         return 1;
     }
     initializeSimulation();
-    // bool windowReady=initializeApp();
-    // if(windowReady==false){
-    //     cout<<"Error...."<<endl;
-    //     return 1;
-    // }
-    cout<<"Simulation Started!"<<endl;
-    // cout<<"Controls: SPACE=Pause, . = Step, ESC=Exit"<<endl;
-    // runApp();
-    // cleanupApp();
-    char input=' ';
-    while(input!='q'){
-        simulateOneTick();
-        cout<<"Step > ";
-        input=cin.get();
+    bool windowReady=initializeApp();
+    if(windowReady==false){
+        cout<<"Error...."<<endl;
+        return 1;
     }
+    cout<<"Simulation Started!"<<endl;
+    cout<<"Controls: SPACE=Pause, . = Step, ESC=Exit"<<endl;
+    runApp();
+    cleanupApp();
     return 0;
 }
