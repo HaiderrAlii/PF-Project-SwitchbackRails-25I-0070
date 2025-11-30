@@ -79,7 +79,7 @@ void updateSignalLights(){
 // ----------------------------------------------------------------------------
 // Manually toggle a switch state.
 // ----------------------------------------------------------------------------
-void toggleSwitchState(){
+void toggleSwitchState(int idx){
     if(idx>=0&&idx<max_switch){
         if(switch_state[idx]==0){
             switch_state[idx]=1;
@@ -95,7 +95,7 @@ void toggleSwitchState(){
 // ----------------------------------------------------------------------------
 // Return the state for a given direction.
 // ----------------------------------------------------------------------------
-int getSwitchStateForDirection(){
+int getSwitchStateForDirection(int idx,int dir){
     if(idx<0||idx>=max_switch)return 0;
     return switch_state[idx];
 }
