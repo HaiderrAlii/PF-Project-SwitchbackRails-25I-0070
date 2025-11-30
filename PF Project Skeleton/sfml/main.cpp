@@ -3,7 +3,7 @@
 #include "../core/simulation.h"
 #include "../core/io.h"
 #include <iostream>
-
+using namespace std;
 // ============================================================================
 // MAIN.CPP - Entry point of the application (NO CLASSES)
 // ============================================================================
@@ -19,5 +19,26 @@
 // statistics. Returns 0 on success, 1 on error (e.g., failed to load level
 // file or initialize application).
 // ----------------------------------------------------------------------------
-int main() {
+int main(int argc, char* argv[]){
+    if(argc<2){
+        cout<<"Error..... no file provided"<<endl;
+        cout<<"Usage: ./switchback_rails data/levels/easy_level.lvl"<<endl;
+        return 1;
+    }
+    bool loaded=loadLevelFile(argv[1]);
+    if(loaded==false){
+        cout<<"Errorrrrrrrr the level file did not loaddddd."<<endl;
+        return 1;
+    }
+    initializeSimulation();
+    bool windowReady=initializeApp();
+    if(windowReady==false){
+        cout<<"Error...."<<endl;
+        return 1;
+    }
+    cout<<"Simulation Started!"<<endl;
+    cout<<"Controls: SPACE=Pause, . = Step, ESC=Exit"<<endl;
+    runApp();
+    cleanupApp();
+    return 0;
 }
